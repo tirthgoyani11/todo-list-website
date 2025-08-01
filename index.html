@@ -7,24 +7,230 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="todo-card">
-        <h1 class="todo-header">Todo List</h1>
-        
-        <div class="todo-input-row">
-            <input type="text" id="todoInput" placeholder="Add a new task...">
-            <button id="addBtn">Add</button>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Todo App</h2>
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
         </div>
-        
-        <ul id="todoList" class="todo-list">
-            <!-- Todo items will be added here dynamically -->
+        <ul class="sidebar-menu">
+            <li><a href="#dashboard" class="nav-link active" data-section="dashboard">📊 Dashboard</a></li>
+            <li><a href="#tasks" class="nav-link" data-section="tasks">✓ Tasks</a></li>
+            <li><a href="#projects" class="nav-link" data-section="projects">📁 Projects</a></li>
+            <li><a href="#calendar" class="nav-link" data-section="calendar">📅 Calendar</a></li>
+            <li><a href="#analytics" class="nav-link" data-section="analytics">📈 Analytics</a></li>
+            <li><a href="#settings" class="nav-link" data-section="settings">⚙️ Settings</a></li>
         </ul>
-        
-        <div class="stats-row">
-            <span id="totalTasks">Total: 0</span>
-            <span id="completedTasks">Completed: 0</span>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <div class="content-section active" id="dashboard">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+                <p>Welcome to your productivity workspace</p>
+            </header>
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <span id="totalTasks">Total: 0</span>
+                </div>
+                <div class="stat-card">
+                    <span id="completedTasks">Completed: 0</span>
+                </div>
+                <div class="stat-card">
+                    <span id="pendingTasks">Pending: 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="tasks">
+            <header class="page-header">
+                <h1>Tasks</h1>
+                <p>Manage your tasks with AI-powered insights</p>
+            </header>
+            <div class="todo-container">
+                <div class="todo-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="high-priority">High Priority</button>
+                </div>
+                
+                <ul id="todoList" class="todo-list">
+                    <!-- Todo items will be added here dynamically -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section" id="projects">
+            <header class="page-header">
+                <h1>Projects</h1>
+                <p>Organize tasks into projects</p>
+            </header>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be added here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="calendar">
+            <header class="page-header">
+                <h1>Calendar</h1>
+                <p>View tasks by date</p>
+            </header>
+            <div class="calendar-container" id="calendarContainer">
+                <!-- Calendar will be rendered here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="analytics">
+            <header class="page-header">
+                <h1>Analytics</h1>
+                <p>AI-powered productivity insights</p>
+            </header>
+            <div class="analytics-dashboard" id="analyticsContainer">
+                <!-- Analytics charts and insights -->
+            </div>
+        </div>
+
+        <div class="content-section" id="settings">
+            <header class="page-header">
+                <h1>Settings</h1>
+                <p>Customize your experience</p>
+            </header>
+            <div class="settings-container">
+                <div class="setting-group">
+                    <h3>AI Features</h3>
+                    <label class="setting-item">
+                        <input type="checkbox" id="enableAISuggestions" checked>
+                        <span>Enable AI task suggestions</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="enableAutoSummarization" checked>
+                        <span>Auto-summarize completed tasks</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Task Button -->
+    <button class="floating-add-btn" id="floatingAddBtn" title="Add New Task">
+        <span class="add-icon">+</span>
+    </button>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay" id="taskModalOverlay">
+        <div class="modal" id="taskModal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Task</h3>
+                <button class="modal-close" id="modalCloseBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title</label>
+                        <input type="text" id="taskTitle" name="title" placeholder="Enter task title..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" name="description" placeholder="Add task description..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskPriority">Priority</label>
+                            <select id="taskPriority" name="priority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="taskDueDate">Due Date</label>
+                            <input type="date" id="taskDueDate" name="dueDate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskProject">Project</label>
+                        <select id="taskProject" name="project">
+                            <option value="">No Project</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="study">Study</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskTags">Tags</label>
+                        <input type="text" id="taskTags" name="tags" placeholder="Enter tags separated by commas...">
+                    </div>
+                    
+                    <!-- AI Features Section -->
+                    <div class="ai-features">
+                        <h4>AI Features</h4>
+                        <div class="ai-controls">
+                            <button type="button" class="ai-btn" id="aiSuggestBtn" data-action="suggest">
+                                🤖 Get AI Suggestions
+                            </button>
+                            <button type="button" class="ai-btn" id="aiBreakdownBtn" data-action="breakdown">
+                                📋 Break Down Task
+                            </button>
+                        </div>
+                        <div class="ai-output" id="aiOutput" style="display: none;">
+                            <h5>AI Suggestions:</h5>
+                            <div id="aiSuggestions"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="submit" form="taskForm" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+            </div>
         </div>
     </div>
-    
+
+    <!-- AI Summary Modal -->
+    <div class="modal-overlay" id="summaryModalOverlay">
+        <div class="modal summary-modal" id="summaryModal">
+            <div class="modal-header">
+                <h3>AI Task Summary</h3>
+                <button class="modal-close" id="summaryModalCloseBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="summary-content" id="summaryContent">
+                    <!-- AI-generated summary content -->
+                </div>
+                <div class="summary-actions">
+                    <button class="btn btn-outline" id="regenerateSummaryBtn">🔄 Regenerate</button>
+                    <button class="btn btn-outline" id="exportSummaryBtn">📄 Export</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeSummaryBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModalOverlay">
+        <div class="modal confirm-modal" id="confirmModal">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Action</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirmCancelBtn">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
