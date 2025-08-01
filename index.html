@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Todo List</h1>
+    <div class="todo-card">
+        <h1 class="todo-header">Todo List</h1>
         
-        <div class="input-section">
+        <div class="todo-input-row">
             <input type="text" id="todoInput" placeholder="Add a new task...">
             <button id="addBtn">Add</button>
         </div>
@@ -19,7 +19,7 @@
             <!-- Todo items will be added here dynamically -->
         </ul>
         
-        <div class="stats">
+        <div class="stats-row">
             <span id="totalTasks">Total: 0</span>
             <span id="completedTasks">Completed: 0</span>
         </div>
