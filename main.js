@@ -1,5 +1,7 @@
-// Todo List App JavaScript
+/* main.js - JavaScript file that handles all the interactive functionality for the Todo List application
+ * Including adding, deleting, toggling tasks, and updating statistics */
 
+// Todo List App JavaScript
 let todos = [];
 let todoIdCounter = 1;
 
@@ -62,8 +64,7 @@ function renderTodos() {
         li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
         
         li.innerHTML = `
-            <input type="checkbox" ${todo.completed ? 'checked' : ''} 
-                   onchange="toggleTodo(${todo.id})">
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo(${todo.id})">
             <span class="todo-text">${todo.text}</span>
             <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
         `;
